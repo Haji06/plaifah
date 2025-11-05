@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💌 เว็บการ์ดบอกรักแฟน 💖</title>
+    <style>
+/* ----------------------------------------------------- */
+/* --- ส่วนที่ 1: โค้ด CSS สำหรับการออกแบบและแอนิเมชัน --- */
+/* ----------------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+
+body {
+    /* พื้นหลังไล่ระดับสีชมพู-ม่วงอ่อน */
+    background: radial-gradient(circle at top left, #ffc9d4 0%, #f6e4ff 100%);
+    font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* สไตล์การ์ดหลัก: Glassmorphism */
+.love-card {
+    background: rgba(255, 255, 255, 0.9); /* พื้นหลังขาวกึ่งโปร่งแสง */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 30px;
+    /* เงาสีชมพูอ่อนโยน */
+    box-shadow: 0 20px 50px rgba(255, 90, 180, 0.3), 0 0 10px rgba(255, 255, 255, 0.8) inset;
+    padding: 40px;
+    width: 90%;
+    max-width: 550px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    animation: fade-in 2s forwards; /* เอฟเฟกต์การ์ดค่อยๆปรากฏ */
+}
+
+/* หัวข้อหลัก (มีเอฟเฟกต์หัวใจเต้น) */
+.header-text {
+    color: #ff5e90;
+    font-size: 2.8em;
+    font-weight: 700;
+    margin-bottom: 5px;
+    position: relative;
+    display: inline-block;
+    animation: pulse-heart 2.5s infinite ease-in-out;
+}
+
+/* ส่วนแสดงรูปภาพ: Photo Stack */
+.photo-stack {
+    position: relative;
+    width: 100%;
+    height: 250px; /* ความสูงสำหรับรูปภาพแนวตั้ง */
+    margin: 40px 0;
+}
+
+.photo-item {
+    position: absolute;
+    width: 180px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    /* แอนิเมชันลอยตัวที่กำหนดแยกกัน */
+    animation: floating 8s infinite alternate-reverse ease-in-out;
+}
+
+/* กำหนดตำแหน่งและองศาการเอียงของรูป */
+.photo-item:nth-child(1) {
+    top: 0;
+    left: 10%;
+    transform: rotate(-5deg); 
+    z-index: 3;
+    animation-delay: 0s; /* หน่วงเวลาเริ่มต้น */
+}
+
+.photo-item:nth-child(2) {
+    top: 20px;
+    left: 50%;
+    transform: rotate(5deg) translateX(-50%); /* จัดกึ่งกลางและเอียง */
+    z-index: 2;
+    animation-delay: 2s;
+}
+
+.photo-item:nth-child(3) {
+    top: 40px;
+    left: 65%;
+    transform: rotate(-10deg);
+    z-index: 1;
+    animation-delay: 4s;
+}
+
+/* Hover Effect: เมื่อเมาส์ชี้จะกลับมาตรงและขยายใหญ่ขึ้นเล็กน้อย */
+.photo-item:hover {
+    z-index: 10;
+    transform: scale(1.1) rotate(0deg) !important;
+    box-shadow: 0 15px 30px rgba(255, 50, 150, 0.7);
+}
+
+/* ข้อความและ Spotify Embed */
+.message-box {
+    background: #fcf1f5;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px dashed #ffc0cb;
+    margin: 30px 0;
+    color: #333;
+    line-height: 1.6;
+    font-size: 1.1em;
+    opacity: 0;
+    animation: fade-in-up 1s forwards 1.5s; /* ค่อยๆ ปรากฏขึ้นมา */
+}
+
+.spotify-embed {
+    margin-top: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fade-in-up 1s forwards 2s; /* ค่อยๆ ปรากฏขึ้นมา */
+}
+
+.spotify-embed iframe {
+    width: 100%;
+    border: none;
+    height: 80px;
+}
+
+/* Footer Style */
+.footer-text {
+    margin-top: 20px;
+    color: #ff5e90;
+    font-weight: 700;
+    font-size: 0.9em;
+    opacity: 0;
+    animation: fade-in-up 1s forwards 2.5s; /* ค่อยๆ ปรากฏขึ้นมา */
+}
+
+/* --- Keyframe Animations --- */
+
+/* 1. ค่อยๆ ปรากฏ (Fade In) */
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. ค่อยๆ ปรากฏและเลื่อนขึ้น (Fade In Up) */
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. เอฟเฟกต์ลอยตัวของรูปภาพ (Floating Photo Effect) */
+@keyframes floating {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* 4. เอฟเฟกต์หัวใจเต้นเบาๆ */
+@keyframes pulse-heart {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Media Query สำหรับมือถือ (ให้รูปไม่ซ้อนแน่นเกินไป) */
+@media (max-width: 600px) {
+    .photo-stack {
+        height: 150px;
+    }
+    .photo-item {
+        width: 100px;
+        height: 150px;
+        left: 50% !important; /* จัดกึ่งกลางในมือถือ */
+        transform: translateX(-50%) rotate(0deg) !important;
+    }
+    .photo-item:nth-child(2) { top: 10px; }
+    .photo-item:nth-child(3) { top: 20px; }
+    .photo-item { animation: none !important; } /* ปิดแอนิเมชันลอยตัวในมือถือ */
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="love-card">
+        
+        <h1 class="header-text">💌 สำหรับคนพิเศษ 💖</h1>
+        <p class="subtitle">...</p>
+
+        <div class="photo-stack">
+            <div class="photo-item" style="background-image: url('img/9834.jpg');"></div>
+            <div class="photo-item" style="background-image: url('img/9839.jpg');"></div>
+            <div class="photo-item" style="background-image: url('img/9846.jpg');"></div>
+        </div>
+
+        <div class="message-box">
+            <p>
+                สุขสันต์วันครบรอบนะครับ นี่เป็นสิ่งเล็กๆน้อยๆที่พี่ทำให้หนูได้
+                ดูชอบฟังเพลงนี้รึป่าวอะ หวังว่าจะชอบนะค้าบ😊
+            </p>
+        </div>
+
+        <div class="spotify-embed">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1TfEk3oKLS6rXvWycCynWS?utm_source=generator&theme=0" width="80%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
+        <p class="footer-text"> ❤️</p>
+
+    </div>
+
+</body>
+</html>
